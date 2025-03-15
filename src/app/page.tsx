@@ -6,7 +6,7 @@ import Desc from "./components/description";
 
 export default function Home() {
   return (
-    <div className="w-screen overflow-hidden bg-gray-950">
+    <div className="overflow-hidden bg-gray-950">
       <Hero />
       <Desc />
     </div>
