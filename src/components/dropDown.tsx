@@ -1,7 +1,7 @@
 "use client";
 import type React from "react";
 import { useState } from "react";
-import { poseImages } from "../utils/pose_images";
+import { poseImages } from "../app/utils/pose_images";
 import { ChevronDown } from "lucide-react";
 
 interface DropDownProps {

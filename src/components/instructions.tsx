@@ -1,5 +1,5 @@
 import type React from "react";
-import { poseInstructions } from "../utils/data";
+import { poseInstructions } from "../app/utils/data";
 
 interface InstructionsProps {
   currentPose: string;
