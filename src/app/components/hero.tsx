@@ -127,30 +127,26 @@ export default function Page() {
   }, [index])
 
   return (
-    <main className="w-full min-h-screen flex flex-col bg-gradient-to-b from-black to-gray-900 overflow-x-hidden">
-      <nav className="w-full flex justify-between items-center p-5 px-6 md:px-10 lg:px-16 z-20 fixed top-0 left-0 bg-gradient-to-b from-black/50 to-transparent backdrop-blur-sm">
-        <div className="flex items-center gap-8 md:gap-12">
-          <h1 className="montserrat-bold text-base text-white cursor-pointer hover:text-indigo-300 transition-colors">
-            Contact
-          </h1>
-          <h1 className="montserrat-bold text-base text-white cursor-pointer hover:text-indigo-300 transition-colors">
-            Home
-          </h1>
-        </div>
+    <main className="w-full min-h-screen flex flex-col items-center bg-gradient-to-b from-black to-gray-900 overflow-x-hidden">
+      <nav className=" w-[95vw] mt-4 rounded-full fixed z-20 bg-black/50 to-transparent backdrop-blur-sm">
+        <div className="mx-auto flex items-center justify-between p-5 px-6 md:px-10 lg:px-16 relative">
+          <div className="flex items-center gap-8 md:gap-12">
+            <button className="montserrat-bold text-base text-white hover:text-indigo-300" onClick={()=>router.push("/contact")}>Contact</button>
+            <button className="montserrat-bold text-base text-white hover:text-indigo-300" onClick={()=>router.push("/")}>Pose</button>
+          </div>
 
-        <h1 className="zain-extrabold text-4xl md:text-5xl lg:text-5xl absolute left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-300 to-purple-100 bg-clip-text text-transparent">
-          Yoga Delight
-        </h1>
+          <button onClick={()=>router.push("/")} className="zain-extrabold text-4xl md:text-5xl absolute left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-300 to-purple-100 bg-clip-text text-transparent">
+            Yoga Delight
+          </button>
 
-        <div className="flex items-center gap-8 md:gap-12">
-          <h1 className="montserrat-bold text-base text-white cursor-pointer hover:text-indigo-300 transition-colors">
-            About
-          </h1>
-          <h1 className="montserrat-bold text-base text-white cursor-pointer hover:text-indigo-300 transition-colors">
-            Contact Us
-          </h1>
+          {/* Right */}
+          <div className="flex items-center gap-8 md:gap-12">
+            <button className="montserrat-bold text-base text-white hover:text-indigo-300" onClick={()=>router.push("/recc")}>Reccomendation</button>
+            <button className="montserrat-bold text-base text-white hover:text-indigo-300" onClick={()=>router.push("/about")}>About</button>
+          </div>
         </div>
       </nav>
+
 
       <div className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden rounded-b-[2rem] md:rounded-b-[3rem] lg:rounded-b-[4rem]">
         <video
