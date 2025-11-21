@@ -1,184 +1,203 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import Navbar from "@/src/components/navbar"
+import type React from "react"
 
-export default function Home() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const heroRef = useRef<HTMLDivElement>(null)
-  const [index, setIndex] = useState<number>(0)
-  const [vidIndex, setVidIndex] = useState<number>(0)
-  const [fade, setFade] = useState(false)
-  const [blur, setBlur] = useState(false)
-  const router = useRouter()
+import { useState } from "react"
 
-  const vids = ["/back.mp4", "/back5.mp4", "/back2.mp4", "/back4.mp4", "/back3.mp4"]
+export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  })
+  const [submitted, setSubmitted] = useState(false)
 
-  const strings = [
-    "TRANSFORM \nYOUR MIND,BODY \n& SOUL.",
-    "AI-POWERED\n YOGA,TAILORED\n FOR YOU.",
-    "PERFECT YOUR\n POSE. FIND \nYOUR FLOW.",
-    "PERSONALIZED\n YOGA FOR \nEVERY BODY.",
-    "PATH TO WELLNESS\n ,ONE POSE \nAT A TIME.",
-  ]
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
 
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    const handleVideoTransition = () => {
-      setFade(true)
-      setBlur(true)
-
-      setTimeout(() => {
-        setVidIndex((prevIndex) => (prevIndex + 1) % vids.length)
-
-        if (video) {
-          const canPlayHandler = () => {
-            video
-              .play()
-              .then(() => {
-                setTimeout(() => {
-                  setFade(false)
-                  setBlur(false)
-                }, 100)
-              })
-              .catch((err) => {
-                console.error("Error playing video:", err)
-                setFade(false)
-                setBlur(false)
-              })
-
-            video.removeEventListener("canplay", canPlayHandler)
-          }
-
-          video.addEventListener("canplay", canPlayHandler)
-
-          video.load()
-        }
-      }, 400)
-    }
-
-    const handleTimeUpdate = () => {
-      if (video.duration - video.currentTime <= 1) {
-        video.removeEventListener("timeupdate", handleTimeUpdate)
-        handleVideoTransition()
-      }
-    }
-
-    video.addEventListener("timeupdate", handleTimeUpdate)
-
-    return () => {
-      video.removeEventListener("timeupdate", handleTimeUpdate)
-    }
-  }, [vids, vidIndex])
-
-  useEffect(() => {
-    const hero = heroRef.current
-    if (!hero) return
-
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-    hero.innerHTML = strings[index].replace(/\n/g, "<br>")
-
-    const startTextCycle = () => {
-      let iterations = 0
-      const currentIndex = index
-      const nextIndex = (currentIndex + 1) % strings.length
-      const nextText = strings[nextIndex]
-      const nextTextLines = nextText.split("\n")
-
-      const interval = setInterval(() => {
-        const animatedLines = nextTextLines.map((line, lineIndex) => {
-          return line
-            .split("")
-            .map((letter, i) => {
-              if (i < iterations) {
-                return letter
-              }
-              return letters[Math.floor(Math.random() * letters.length)]
-            })
-            .join("")
-        })
-
-        hero.innerHTML = animatedLines.join("<br>")
-
-        iterations += 1
-
-        if (iterations > Math.max(...nextTextLines.map((line) => line.length))) {
-          clearInterval(interval)
-          setIndex(nextIndex)
-        }
-      }, 50)
-    }
-
-    const initialTimeout = setTimeout(startTextCycle, 3000)
-
-    return () => {
-      clearTimeout(initialTimeout)
-    }
-  }, [index, strings])
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Here you would typically send the form data to a backend
+    console.log("Form submitted:", formData)
+    setSubmitted(true)
+    setFormData({ name: "", email: "", subject: "", message: "" })
+    setTimeout(() => setSubmitted(false), 5000)
+  }
 
   return (
-    <main className="w-screen h-screen overflow-hidden flex flex-col bg-gradient-to-b from-black to-gray-900">
-      <nav className="w-full flex justify-between items-center p-5 px-6 md:px-10 lg:px-16 z-20">
-        <div className="flex items-center gap-8 md:gap-12">
-          <Link href="/about" className="montserrat-bold text-base hover:text-purple-300 transition-colors">
-            About
-          </Link>
-          <Link href="/" className="montserrat-bold text-base hover:text-purple-300 transition-colors">
-            Home
-          </Link>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden">
+      <Navbar/>
+      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-20">
+          <div className="lg:col-span-1">
+            <div className="sticky top-32 space-y-12">
+              <div>
+                <h2 className="text-4xl font-light mb-2">Get in Touch</h2>
+                <p className="text-gray-400 text-sm montserrat-bold tracking-wider">
+                  Let's connect and transform your wellness journey
+                </p>
+              </div>
 
-        <h1 className="zain-extrabold text-4xl md:text-5xl lg:text-5xl absolute left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-300 to-purple-100 bg-clip-text text-transparent">
-          Yoga Delight
-        </h1>
+              <div>
+                <h3 className="montserrat-bold text-sm tracking-wider text-gray-400 mb-4">EMAIL</h3>
+                <a href="mailto:hello@yogadelight.com" className="text-lg hover:text-indigo-300 transition-colors">
+                  hello@yogadelight.com
+                </a>
+              </div>
 
-        <div className="flex items-center gap-8 md:gap-12">
-          <Link href="/about" className="montserrat-bold text-base hover:text-purple-300 transition-colors">
-            About
-          </Link>
-          <Link href="/contact" className="montserrat-bold text-base hover:text-purple-300 transition-colors">
-            Contact Us
-          </Link>
-        </div>
-      </nav>
+              <div>
+                <h3 className="montserrat-bold text-sm tracking-wider text-gray-400 mb-4">PHONE</h3>
+                <a href="tel:+1234567890" className="text-lg hover:text-indigo-300 transition-colors">
+                  +1 (234) 567-890
+                </a>
+              </div>
 
-      <div className="relative flex-1 flex flex-col items-center justify-center overflow-hidden rounded-[2rem] md:rounded-[3rem] lg:rounded-t-[4rem]">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          playsInline
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
-            fade ? "opacity-0" : "opacity-60"
-          } ${blur ? "blur-xl" : "blur-0"}`}
-        >
-          <source src={vids[vidIndex]} type="video/mp4" />
-        </video>
-
-        <div className="relative z-10 flex flex-col items-center justify-center h-full w-full px-4">
-          <div className="flex items-center justify-center mb-16">
-            <h1
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl space-mono-bold font-mono text-center whitespace-pre-line break-words leading-tight"
-              ref={heroRef}
-            >
-              {strings[0].replace(/\n/g, "<br>")}
-            </h1>
+              <div className="pt-8 border-t border-gray-700">
+                <h3 className="montserrat-bold text-sm tracking-wider text-gray-400 mb-6">SOCIAL MEDIA</h3>
+                <div className="space-y-4">
+                  <a href="#" className="flex items-center gap-2 text-gray-400 hover:text-indigo-300 transition-colors">
+                    <span>Instagram</span>
+                    <span className="text-xs">→</span>
+                  </a>
+                  <a href="#" className="flex items-center gap-2 text-gray-400 hover:text-indigo-300 transition-colors">
+                    <span>Twitter</span>
+                    <span className="text-xs">→</span>
+                  </a>
+                  <a href="#" className="flex items-center gap-2 text-gray-400 hover:text-indigo-300 transition-colors">
+                    <span>LinkedIn</span>
+                    <span className="text-xs">→</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <button
-            className="montserrat-bold border border-white text-xl md:text-3xl rounded-xl p-2 px-6 hover:border-indigo-300 hover:text-black hover:bg-gradient-to-r from-indigo-300 to-purple-100 active:scale-95 transition-transform"
-            onClick={() => {
-              router.push("/yoga-check")
-            }}
-          >
-            Pose Now
-          </button>
+          <div className="lg:col-span-2">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block montserrat-bold text-sm tracking-wider text-gray-400 mb-2">
+                  YOUR NAME
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                  placeholder="John Doe"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block montserrat-bold text-sm tracking-wider text-gray-400 mb-2">
+                  EMAIL ADDRESS
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                  placeholder="john@example.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="subject" className="block montserrat-bold text-sm tracking-wider text-gray-400 mb-2">
+                  SUBJECT
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                  placeholder="How can we help?"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block montserrat-bold text-sm tracking-wider text-gray-400 mb-2">
+                  MESSAGE
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={6}
+                  className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors resize-none"
+                  placeholder="Tell us about your inquiry..."
+                />
+              </div>
+
+              <div className="flex items-center gap-4 pt-4">
+                <button
+                  type="submit"
+                  className="px-8 py-3 montserrat-bold text-lg rounded-lg border border-indigo-300 text-indigo-300 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-200 hover:text-black hover:border-transparent transition-all active:scale-95"
+                >
+                  Send Message
+                </button>
+
+                {submitted && <p className="text-green-400 text-sm">✓ Message sent successfully!</p>}
+              </div>
+            </form>
+
+            <div className="mt-16 pt-16 border-t border-gray-800">
+              <h2 className="text-3xl font-light mb-8">Frequently Asked Questions</h2>
+
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">
+                    How do I get started with Yoga Delight?
+                  </h3>
+                  <p className="text-gray-400">
+                    Simply take our personalized yoga assessment, and our AI will recommend poses tailored to your body
+                    and goals.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">Do I need prior yoga experience?</h3>
+                  <p className="text-gray-400">
+                    Not at all! Our platform adapts to all levels, from complete beginners to advanced practitioners.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">How does the AI personalization work?</h3>
+                  <p className="text-gray-400">
+                    Our system analyzes your body type, flexibility, strength, and practice history to create customized
+                    sequences.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">Can I practice offline?</h3>
+                  <p className="text-gray-400">
+                    Yes, you can download recommended sequences and practice them anytime, anywhere without an internet
+                    connection.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

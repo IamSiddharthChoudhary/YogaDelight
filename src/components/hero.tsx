@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
+import Navbar from "./navbar"
 
 const vids = ["/back.mp4", "/back5.mp4", "/back2.mp4", "/back4.mp4", "/back3.mp4"]
 
@@ -21,15 +22,6 @@ export default function Page() {
   const [vidIndex, setVidIndex] = useState(0)
   const [fade, setFade] = useState(false)
   const [blur, setBlur] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    window.addEventListener("scroll", onScroll)
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
 
 
   useEffect(() => {
@@ -137,32 +129,7 @@ export default function Page() {
 
   return (
     <main className="w-full min-h-screen flex flex-col items-center bg-gradient-to-b from-black to-gray-900 overflow-x-hidden">
-      <nav
-          className={`
-            mt-4 rounded-full fixed z-20 transition-all duration-300
-            ${scrolled ? "bg-black/50 shadow-lg backdrop-blur-sm w-[90vw]" : "bg-transparent w-[100vw]"}
-          `}
-        >
-        <div className="mx-auto flex items-center justify-between p-5 px-6 md:px-10 lg:px-16 relative">
-          <div className="flex items-center gap-8 md:gap-12">
-            <button className="montserrat-bold text-base text-white hover:text-indigo-300" onClick={() => router.push("/contact")}>Contact</button>
-            <button className="montserrat-bold text-base text-white hover:text-indigo-300" onClick={() => router.push("/")}>Pose</button>
-          </div>
-
-          <button
-            onClick={() => router.push("/")}
-            className="zain-extrabold text-4xl md:text-5xl absolute left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-300 to-purple-100 bg-clip-text text-transparent"
-          >
-            Yoga Delight
-          </button>
-
-          <div className="flex items-center gap-8 md:gap-12">
-            <button className="montserrat-bold text-base text-white hover:text-indigo-300" onClick={() => router.push("/recc")}>Reccomendation</button>
-            <button className="montserrat-bold text-base text-white hover:text-indigo-300" onClick={() => router.push("/about")}>About</button>
-          </div>
-        </div>
-      </nav>
-
+      <Navbar/>
       <div className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden rounded-b-[2rem] md:rounded-b-[3rem] lg:rounded-b-[4rem]">
         <video
           ref={videoRef}
@@ -197,7 +164,6 @@ export default function Page() {
           </button>
         </div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50">
           <svg
             xmlns="http://www.w3.org/2000/svg"

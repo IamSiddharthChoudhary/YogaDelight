@@ -1,184 +1,132 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import Navbar from "@/src/components/navbar"
 
-export default function Home() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const heroRef = useRef<HTMLDivElement>(null)
-  const [index, setIndex] = useState<number>(0)
-  const [vidIndex, setVidIndex] = useState<number>(0)
-  const [fade, setFade] = useState(false)
-  const [blur, setBlur] = useState(false)
-  const router = useRouter()
-
-  const vids = ["/back.mp4", "/back5.mp4", "/back2.mp4", "/back4.mp4", "/back3.mp4"]
-
-  const strings = [
-    "TRANSFORM \nYOUR MIND,BODY \n& SOUL.",
-    "AI-POWERED\n YOGA,TAILORED\n FOR YOU.",
-    "PERFECT YOUR\n POSE. FIND \nYOUR FLOW.",
-    "PERSONALIZED\n YOGA FOR \nEVERY BODY.",
-    "PATH TO WELLNESS\n ,ONE POSE \nAT A TIME.",
-  ]
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    const handleVideoTransition = () => {
-      setFade(true)
-      setBlur(true)
-
-      setTimeout(() => {
-        setVidIndex((prevIndex) => (prevIndex + 1) % vids.length)
-
-        if (video) {
-          const canPlayHandler = () => {
-            video
-              .play()
-              .then(() => {
-                setTimeout(() => {
-                  setFade(false)
-                  setBlur(false)
-                }, 100)
-              })
-              .catch((err) => {
-                console.error("Error playing video:", err)
-                setFade(false)
-                setBlur(false)
-              })
-
-            video.removeEventListener("canplay", canPlayHandler)
-          }
-
-          video.addEventListener("canplay", canPlayHandler)
-
-          video.load()
-        }
-      }, 400)
-    }
-
-    const handleTimeUpdate = () => {
-      if (video.duration - video.currentTime <= 1) {
-        video.removeEventListener("timeupdate", handleTimeUpdate)
-        handleVideoTransition()
-      }
-    }
-
-    video.addEventListener("timeupdate", handleTimeUpdate)
-
-    return () => {
-      video.removeEventListener("timeupdate", handleTimeUpdate)
-    }
-  }, [vids, vidIndex])
-
-  useEffect(() => {
-    const hero = heroRef.current
-    if (!hero) return
-
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-    hero.innerHTML = strings[index].replace(/\n/g, "<br>")
-
-    const startTextCycle = () => {
-      let iterations = 0
-      const currentIndex = index
-      const nextIndex = (currentIndex + 1) % strings.length
-      const nextText = strings[nextIndex]
-      const nextTextLines = nextText.split("\n")
-
-      const interval = setInterval(() => {
-        const animatedLines = nextTextLines.map((line, lineIndex) => {
-          return line
-            .split("")
-            .map((letter, i) => {
-              if (i < iterations) {
-                return letter
-              }
-              return letters[Math.floor(Math.random() * letters.length)]
-            })
-            .join("")
-        })
-
-        hero.innerHTML = animatedLines.join("<br>")
-
-        iterations += 1
-
-        if (iterations > Math.max(...nextTextLines.map((line) => line.length))) {
-          clearInterval(interval)
-          setIndex(nextIndex)
-        }
-      }, 50)
-    }
-
-    const initialTimeout = setTimeout(startTextCycle, 3000)
-
-    return () => {
-      clearTimeout(initialTimeout)
-    }
-  }, [index, strings])
-
+export default function About() {
   return (
-    <main className="w-screen h-screen overflow-hidden flex flex-col bg-gradient-to-b from-black to-gray-900">
-      <nav className="w-full flex justify-between items-center p-5 px-6 md:px-10 lg:px-16 z-20">
-        <div className="flex items-center gap-8 md:gap-12">
-          <Link href="/about" className="montserrat-bold text-base hover:text-purple-300 transition-colors">
-            About
-          </Link>
-          <Link href="/" className="montserrat-bold text-base hover:text-purple-300 transition-colors">
-            Home
-          </Link>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden">
 
-        <h1 className="zain-extrabold text-4xl md:text-5xl lg:text-5xl absolute left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-300 to-purple-100 bg-clip-text text-transparent">
-          Yoga Delight
-        </h1>
+      <Navbar/>
+      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-20">
+          <div className="lg:col-span-1">
+            <div className="sticky top-32 space-y-8">
+              <div>
+                <h2 className="montserrat-bold text-sm tracking-wider text-gray-400 mb-6">SECTIONS</h2>
+                <div className="space-y-4">
+                  <button className="block text-lg font-light text-white hover:text-indigo-300 transition-colors text-left">
+                    Mission
+                  </button>
+                  <button className="block text-lg font-light text-gray-400 hover:text-indigo-300 transition-colors text-left">
+                    Our Team
+                  </button>
+                  <button className="block text-lg font-light text-gray-400 hover:text-indigo-300 transition-colors text-left">
+                    Values
+                  </button>
+                </div>
+              </div>
 
-        <div className="flex items-center gap-8 md:gap-12">
-          <Link href="/about" className="montserrat-bold text-base hover:text-purple-300 transition-colors">
-            About
-          </Link>
-          <Link href="/contact" className="montserrat-bold text-base hover:text-purple-300 transition-colors">
-            Contact Us
-          </Link>
-        </div>
-      </nav>
-
-      <div className="relative flex-1 flex flex-col items-center justify-center overflow-hidden rounded-[2rem] md:rounded-[3rem] lg:rounded-t-[4rem]">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          playsInline
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
-            fade ? "opacity-0" : "opacity-60"
-          } ${blur ? "blur-xl" : "blur-0"}`}
-        >
-          <source src={vids[vidIndex]} type="video/mp4" />
-        </video>
-
-        <div className="relative z-10 flex flex-col items-center justify-center h-full w-full px-4">
-          <div className="flex items-center justify-center mb-16">
-            <h1
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl space-mono-bold font-mono text-center whitespace-pre-line break-words leading-tight"
-              ref={heroRef}
-            >
-              {strings[0].replace(/\n/g, "<br>")}
-            </h1>
+              <div className="pt-8 border-t border-gray-700">
+                <h3 className="montserrat-bold text-sm tracking-wider text-gray-400 mb-4">SOCIAL</h3>
+                <div className="flex gap-6">
+                  <a href="#" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                    Instagram
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                    LinkedIn
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                    Twitter
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <button
-            className="montserrat-bold border border-white text-xl md:text-3xl rounded-xl p-2 px-6 hover:border-indigo-300 hover:text-black hover:bg-gradient-to-r from-indigo-300 to-purple-100 active:scale-95 transition-transform"
-            onClick={() => {
-              router.push("/yoga-check")
-            }}
-          >
-            Pose Now
-          </button>
+          <div className="lg:col-span-2 space-y-16">
+            {/* Mission Section */}
+            <section>
+              <h1 className="text-5xl md:text-6xl font-light mb-8">
+                Transforming Wellness Through{" "}
+                <span className="bg-gradient-to-r from-indigo-300 to-purple-200 bg-clip-text text-transparent">
+                  AI-Powered Yoga
+                </span>
+              </h1>
+
+              <p className="text-lg text-gray-300 leading-relaxed mb-6">
+                At Yoga Delight, we believe that personalized wellness is the future. Our mission is to make yoga
+                accessible, engaging, and perfectly tailored to each individual's unique body, goals, and lifestyle.
+              </p>
+
+              <p className="text-lg text-gray-300 leading-relaxed">
+                By combining cutting-edge artificial intelligence with ancient yoga wisdom, we've created a platform
+                that understands your body, learns from your practice, and evolves with your journey toward better
+                health and mindfulness.
+              </p>
+            </section>
+
+            {/* Our Story Section */}
+            <section className="pt-12 border-t border-gray-800">
+              <h2 className="text-3xl md:text-4xl font-light mb-6">Our Story</h2>
+
+              <div className="space-y-6 text-gray-300">
+                <p className="leading-relaxed">
+                  Founded in 2024, Yoga Delight was born from a simple observation: traditional yoga classes don't
+                  account for individual differences. Whether you're a beginner with tight hamstrings or an advanced
+                  practitioner seeking new challenges, everyone deserves a personalized experience.
+                </p>
+
+                <p className="leading-relaxed">
+                  Our team of yoga instructors, AI specialists, and wellness experts came together to build something
+                  revolutionary. We analyzed thousands of yoga practices, body types, and fitness levels to create an
+                  intelligent system that recommends poses and sequences optimized just for you.
+                </p>
+
+                <p className="leading-relaxed">
+                  Today, thousands of practitioners trust Yoga Delight to guide them toward stronger bodies, calmer
+                  minds, and deeper spiritual connection. We're not just teaching yoga—we're personalizing the path to
+                  wellness.
+                </p>
+              </div>
+            </section>
+
+            {/* Values Section */}
+            <section className="pt-12 border-t border-gray-800">
+              <h2 className="text-3xl md:text-4xl font-light mb-8">Our Core Values</h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="p-6 rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 hover:border-indigo-500/40 transition-colors">
+                  <h3 className="text-lg font-semibold mb-3 text-indigo-300">Personalization</h3>
+                  <p className="text-gray-400">
+                    Every body is unique. We use AI to create truly customized practices for each individual.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 hover:border-indigo-500/40 transition-colors">
+                  <h3 className="text-lg font-semibold mb-3 text-indigo-300">Accessibility</h3>
+                  <p className="text-gray-400">
+                    Yoga should be for everyone. We make wellness guidance affordable and available to all.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 hover:border-indigo-500/40 transition-colors">
+                  <h3 className="text-lg font-semibold mb-3 text-indigo-300">Authenticity</h3>
+                  <p className="text-gray-400">
+                    We respect yoga's ancient roots while embracing modern innovation to enhance practice.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 hover:border-indigo-500/40 transition-colors">
+                  <h3 className="text-lg font-semibold mb-3 text-indigo-300">Community</h3>
+                  <p className="text-gray-400">
+                    We foster a supportive community where practitioners inspire and learn from each other.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   )
 }
