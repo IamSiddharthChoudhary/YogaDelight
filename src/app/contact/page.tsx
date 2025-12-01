@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import Navbar from "@/src/components/navbar"
-import type React from "react"
+import Navbar from "@/src/components/navbar";
+import type React from "react";
 
-import { useState } from "react"
+import { useState } from "react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -11,66 +11,76 @@ export default function Contact() {
     email: "",
     subject: "",
     message: "",
-  })
-  const [submitted, setSubmitted] = useState(false)
+  });
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Here you would typically send the form data to a backend
-    console.log("Form submitted:", formData)
-    setSubmitted(true)
-    setFormData({ name: "", email: "", subject: "", message: "" })
-    setTimeout(() => setSubmitted(false), 5000)
-  }
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    setSubmitted(true);
+    setFormData({ name: "", email: "", subject: "", message: "" });
+    setTimeout(() => setSubmitted(false), 5000);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden">
-      <Navbar/>
+    <div className="space-mono min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden">
+      <div className="h-[10vh]">
+        <Navbar />
+      </div>
       <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-20">
           <div className="lg:col-span-1">
             <div className="sticky top-32 space-y-12">
               <div>
                 <h2 className="text-4xl font-light mb-2">Get in Touch</h2>
-                <p className="text-gray-400 text-sm montserrat-bold tracking-wider">
+                <p className="text-gray-400 text-sm space-mono-boldtracking-wider">
                   Let's connect and transform your wellness journey
                 </p>
               </div>
 
               <div>
-                <h3 className="montserrat-bold text-sm tracking-wider text-gray-400 mb-4">EMAIL</h3>
-                <a href="mailto:hello@yogadelight.com" className="text-lg hover:text-indigo-300 transition-colors">
-                  hello@yogadelight.com
+                <h3 className="space-mono-boldtext-sm tracking-wider text-gray-400 mb-4">
+                  EMAIL
+                </h3>
+                <a
+                  href="mailto:hello@yogadelight.com"
+                  className="text-lg hover:text-indigo-300 transition-colors"
+                >
+                  csiddharth380@gmail.com
                 </a>
               </div>
 
               <div>
-                <h3 className="montserrat-bold text-sm tracking-wider text-gray-400 mb-4">PHONE</h3>
-                <a href="tel:+1234567890" className="text-lg hover:text-indigo-300 transition-colors">
-                  +1 (234) 567-890
+                <h3 className="space-mono-boldtext-sm tracking-wider text-gray-400 mb-4">
+                  PHONE
+                </h3>
+                <a
+                  href="tel:+1234567890"
+                  className="text-lg hover:text-indigo-300 transition-colors"
+                >
+                  +91 8920938135
                 </a>
               </div>
 
               <div className="pt-8 border-t border-gray-700">
-                <h3 className="montserrat-bold text-sm tracking-wider text-gray-400 mb-6">SOCIAL MEDIA</h3>
+                <h3 className="space-mono-boldtext-sm tracking-wider text-gray-400 mb-6">
+                  SOCIAL MEDIA
+                </h3>
                 <div className="space-y-4">
-                  <a href="#" className="flex items-center gap-2 text-gray-400 hover:text-indigo-300 transition-colors">
-                    <span>Instagram</span>
-                    <span className="text-xs">→</span>
-                  </a>
-                  <a href="#" className="flex items-center gap-2 text-gray-400 hover:text-indigo-300 transition-colors">
-                    <span>Twitter</span>
-                    <span className="text-xs">→</span>
-                  </a>
-                  <a href="#" className="flex items-center gap-2 text-gray-400 hover:text-indigo-300 transition-colors">
+                  <a
+                    href="https://www.linkedin.com/in/siddharth-choudhary-a5a0a8229/"
+                    className="flex items-center gap-2 text-gray-400 hover:text-indigo-300 transition-colors"
+                  >
                     <span>LinkedIn</span>
                     <span className="text-xs">→</span>
                   </a>
@@ -82,7 +92,10 @@ export default function Contact() {
           <div className="lg:col-span-2">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block montserrat-bold text-sm tracking-wider text-gray-400 mb-2">
+                <label
+                  htmlFor="name"
+                  className="block space-mono-boldtext-sm tracking-wider text-gray-400 mb-2"
+                >
                   YOUR NAME
                 </label>
                 <input
@@ -98,7 +111,10 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="email" className="block montserrat-bold text-sm tracking-wider text-gray-400 mb-2">
+                <label
+                  htmlFor="email"
+                  className="block space-mono-boldtext-sm tracking-wider text-gray-400 mb-2"
+                >
                   EMAIL ADDRESS
                 </label>
                 <input
@@ -114,7 +130,10 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="subject" className="block montserrat-bold text-sm tracking-wider text-gray-400 mb-2">
+                <label
+                  htmlFor="subject"
+                  className="block space-mono-boldtext-sm tracking-wider text-gray-400 mb-2"
+                >
                   SUBJECT
                 </label>
                 <input
@@ -130,7 +149,10 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block montserrat-bold text-sm tracking-wider text-gray-400 mb-2">
+                <label
+                  htmlFor="message"
+                  className="block space-mono-boldtext-sm tracking-wider text-gray-400 mb-2"
+                >
                   MESSAGE
                 </label>
                 <textarea
@@ -148,17 +170,23 @@ export default function Contact() {
               <div className="flex items-center gap-4 pt-4">
                 <button
                   type="submit"
-                  className="px-8 py-3 montserrat-bold text-lg rounded-lg border border-indigo-300 text-indigo-300 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-200 hover:text-black hover:border-transparent transition-all active:scale-95"
+                  className="px-8 py-3 space-mono-boldtext-lg rounded-lg border border-indigo-300 text-indigo-300 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-200 hover:text-black hover:border-transparent transition-all active:scale-95"
                 >
                   Send Message
                 </button>
 
-                {submitted && <p className="text-green-400 text-sm">✓ Message sent successfully!</p>}
+                {submitted && (
+                  <p className="text-green-400 text-sm">
+                    ✓ Message sent successfully!
+                  </p>
+                )}
               </div>
             </form>
 
             <div className="mt-16 pt-16 border-t border-gray-800">
-              <h2 className="text-3xl font-light mb-8">Frequently Asked Questions</h2>
+              <h2 className="text-3xl font-light mb-8">
+                Frequently Asked Questions
+              </h2>
 
               <div className="space-y-6">
                 <div>
@@ -166,31 +194,38 @@ export default function Contact() {
                     How do I get started with Yoga Delight?
                   </h3>
                   <p className="text-gray-400">
-                    Simply take our personalized yoga assessment, and our AI will recommend poses tailored to your body
-                    and goals.
+                    Simply take our personalized yoga assessment, and our AI
+                    will recommend poses tailored to your body and goals.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">Do I need prior yoga experience?</h3>
+                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">
+                    Do I need prior yoga experience?
+                  </h3>
                   <p className="text-gray-400">
-                    Not at all! Our platform adapts to all levels, from complete beginners to advanced practitioners.
+                    Not at all! Our platform adapts to all levels, from complete
+                    beginners to advanced practitioners.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">How does the AI personalization work?</h3>
+                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">
+                    How does the AI personalization work?
+                  </h3>
                   <p className="text-gray-400">
-                    Our system analyzes your body type, flexibility, strength, and practice history to create customized
-                    sequences.
+                    Our system analyzes your body type, flexibility, strength,
+                    and practice history to create customized sequences.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">Can I practice offline?</h3>
+                  <h3 className="text-lg font-semibold text-indigo-300 mb-2">
+                    Can I practice offline?
+                  </h3>
                   <p className="text-gray-400">
-                    Yes, you can download recommended sequences and practice them anytime, anywhere without an internet
-                    connection.
+                    Yes, you can download recommended sequences and practice
+                    them anytime, anywhere without an internet connection.
                   </p>
                 </div>
               </div>
@@ -199,5 +234,5 @@ export default function Contact() {
         </div>
       </div>
     </div>
-  )
+  );
 }
