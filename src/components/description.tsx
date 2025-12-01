@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  ArrowBigRight,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  MoveLeft,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -80,7 +86,7 @@ export default function Page() {
   return (
     <div
       ref={sectionRef}
-      className="relative w-screen h-screen overflow-hidden bg-gradient-to-b from-gray-900 to-black text-white"
+      className="relative flex flex-col justify-end items-center w-screen h-screen overflow-hidden bg-gradient-to-b from-gray-900 to-black text-white"
     >
       <div
         ref={imageDivRef}
@@ -123,6 +129,35 @@ export default function Page() {
           Try Now
         </button>
       </div>
+      <p className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 text-sm md:text-base text-gray-400 opacity-70 animate-pulse">
+        <svg
+          className="w-4 h-4 md:w-5 md:h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        <span>Move mouse for magic</span>
+        <svg
+          className="w-4 h-4 md:w-5 md:h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </p>
     </div>
   );
 }
