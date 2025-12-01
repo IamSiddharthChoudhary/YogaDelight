@@ -30,7 +30,7 @@ const CLASS_NO: Record<string, number> = {
   Warrior: 7,
 };
 
-let skeletonColor = "rgb(255,255,255)";
+let skeletonColor = "rgb(255,0,0)";
 let flag = false;
 
 const YogaPage = () => {
