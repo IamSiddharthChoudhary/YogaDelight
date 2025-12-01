@@ -149,7 +149,7 @@ const YogaPage = () => {
             keypoint.name &&
             !(keypoint.name === "left_eye" || keypoint.name === "right_eye")
           ) {
-            drawPoint(ctx, keypoint.x, keypoint.y, 8, "rgb(255,255,255)");
+            drawPoint(ctx, keypoint.x, keypoint.y, 8, "rgb(255,0,0)");
 
             // Draw connections
             if (keypoint.name && keypoint.name in keypointConnections) {
@@ -176,7 +176,7 @@ const YogaPage = () => {
         });
 
         if (notDetected > 4) {
-          skeletonColor = "rgb(255,255,255)";
+          skeletonColor = "rgb(255,0,0)";
           return;
         }
 
@@ -197,7 +197,7 @@ const YogaPage = () => {
             skeletonColor = "rgb(0,255,0)";
           } else {
             flag = false;
-            skeletonColor = "rgb(255,255,255)";
+            skeletonColor = "rgb(255,0,0)";
           }
         });
       }
@@ -213,7 +213,7 @@ const YogaPage = () => {
   const stopPose = () => {
     setIsStartPose(false);
     flag = false;
-    skeletonColor = "rgb(255,255,255)";
+    skeletonColor = "rgb(255,0,0)";
 
     // Clean up
     if (detector) {
