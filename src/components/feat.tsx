@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 
 export default function Feat() {
-  const [visible, setVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisible(true)
+            setVisible(true);
           }
-        })
+        });
       },
-      { threshold: 0.1 },
-    )
+      { threshold: 0.1 }
+    );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      observer.observe(sectionRef.current);
     }
 
     return () => {
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
+        observer.unobserve(sectionRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <section
@@ -40,31 +40,38 @@ export default function Feat() {
         }`}
       >
         <div className="flex-1 space-y-8">
-          <h2 className="montserrat-bold text-4xl md:text-6xl font-bold font-serif leading-tight">
+          <h2 className="space-mono-bold text-4xl md:text-6xl font-bold font-serif leading-tight">
             Discover Your <br />
-            <span className="bg-gradient-to-r from-indigo-300 to-purple-200 bg-clip-text text-transparent">
+            <span className="logo bg-gradient-to-r from-indigo-300 to-purple-200 bg-clip-text text-transparent">
               Inner Balance
             </span>
           </h2>
-          <p className="poppins text-lg md:text-xl text-gray-300 leading-relaxed font-light">
-            Yoga Delight brings you a personalized yoga experience powered by AI. Whether you are a beginner or an
-            advanced practitioner, our intelligent system adapts to your needs, helping you perfect your poses and find
-            your flow.
+          <p className="space-mono text-lg md:text-xl text-gray-300 leading-relaxed font-light">
+            Yoga Delight brings you a personalized yoga experience powered by
+            AI. Whether you are a beginner or an advanced practitioner, our
+            intelligent system adapts to your needs, helping you perfect your
+            poses and find your flow.
           </p>
           <div className="flex gap-6 pt-4">
             <div className="flex flex-col gap-2">
-              <span className="text-3xl font-bold text-indigo-300">10+</span>
-              <span className="text-sm text-gray-400 uppercase tracking-wider">Poses</span>
+              <span className="text-3xl font-bold text-indigo-300">5+</span>
+              <span className="text-sm text-gray-400 uppercase tracking-wider">
+                Poses
+              </span>
             </div>
             <div className="w-px h-16 bg-gray-700"></div>
             <div className="flex flex-col gap-2">
               <span className="text-3xl font-bold text-purple-300">AI</span>
-              <span className="text-sm text-gray-400 uppercase tracking-wider">Correction</span>
+              <span className="text-sm text-gray-400 uppercase tracking-wider">
+                Correction
+              </span>
             </div>
             <div className="w-px h-16 bg-gray-700"></div>
             <div className="flex flex-col gap-2">
               <span className="text-3xl font-bold text-indigo-300">24/7</span>
-              <span className="text-sm text-gray-400 uppercase tracking-wider">Access</span>
+              <span className="text-sm text-gray-400 uppercase tracking-wider">
+                Access
+              </span>
             </div>
           </div>
         </div>
@@ -79,9 +86,12 @@ export default function Feat() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
             <div className="absolute bottom-8 left-8 right-8">
               <p className="text-white/90 italic font-light text-lg">
-                "Yoga is the journey of the self, through the self, to the self."
+                "Yoga is the journey of the self, through the self, to the
+                self."
               </p>
-              <p className="text-indigo-300 mt-2 font-medium">— The Bhagavad Gita</p>
+              <p className="text-indigo-300 mt-2 font-medium space-mono">
+                - The Bhagavad Gita
+              </p>
             </div>
           </div>
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/20 rounded-full blur-3xl"></div>
@@ -89,5 +99,5 @@ export default function Feat() {
         </div>
       </div>
     </section>
-  )
+  );
 }
