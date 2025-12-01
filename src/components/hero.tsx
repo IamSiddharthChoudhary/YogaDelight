@@ -1,10 +1,16 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
-import { useRouter } from "next/navigation"
-import Navbar from "./navbar"
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import Navbar from "./navbar";
 
-const vids = ["/back.mp4", "/back5.mp4", "/back2.mp4", "/back4.mp4", "/back3.mp4"]
+const vids = [
+  "/back.mp4",
+  "/back5.mp4",
+  "/back2.mp4",
+  "/back4.mp4",
+  "/back3.mp4",
+];
 
 const strings = [
   "TRANSFORM \nYOUR MIND,BODY \n& SOUL.",
@@ -12,28 +18,27 @@ const strings = [
   "PERFECT YOUR\n POSE. FIND \nYOUR FLOW.",
   "PERSONALIZED\n YOGA FOR \nEVERY BODY.",
   "PATH TO WELLNESS\n,ONE POSE \nAT A TIME.",
-]
+];
 
 export default function Page() {
-  const router = useRouter()
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const heroRef = useRef<HTMLHeadingElement>(null)
-  const [index, setIndex] = useState(0)
-  const [vidIndex, setVidIndex] = useState(0)
-  const [fade, setFade] = useState(false)
-  const [blur, setBlur] = useState(false)
-
+  const router = useRouter();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const heroRef = useRef<HTMLHeadingElement>(null);
+  const [index, setIndex] = useState(0);
+  const [vidIndex, setVidIndex] = useState(0);
+  const [fade, setFade] = useState(false);
+  const [blur, setBlur] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
+    const video = videoRef.current;
+    if (!video) return;
 
     const handleVideoTransition = () => {
-      setFade(true)
-      setBlur(true)
+      setFade(true);
+      setBlur(true);
 
       setTimeout(() => {
-        setVidIndex((prev) => (prev + 1) % vids.length)
+        setVidIndex((prev) => (prev + 1) % vids.length);
 
         if (video) {
           const canPlayHandler = () => {
@@ -41,53 +46,53 @@ export default function Page() {
               .play()
               .then(() => {
                 setTimeout(() => {
-                  setFade(false)
-                  setBlur(false)
-                }, 100)
+                  setFade(false);
+                  setBlur(false);
+                }, 100);
               })
               .catch((err) => {
-                console.error("Error playing video:", err)
-                setFade(false)
-                setBlur(false)
-              })
+                console.error("Error playing video:", err);
+                setFade(false);
+                setBlur(false);
+              });
 
-            video.removeEventListener("canplay", canPlayHandler)
-          }
+            video.removeEventListener("canplay", canPlayHandler);
+          };
 
-          video.addEventListener("canplay", canPlayHandler)
-          video.load()
+          video.addEventListener("canplay", canPlayHandler);
+          video.load();
         }
-      }, 400)
-    }
+      }, 400);
+    };
 
     const handleTimeUpdate = () => {
       if (video.duration - video.currentTime <= 1) {
-        video.removeEventListener("timeupdate", handleTimeUpdate)
-        handleVideoTransition()
+        video.removeEventListener("timeupdate", handleTimeUpdate);
+        handleVideoTransition();
       }
-    }
+    };
 
-    video.addEventListener("timeupdate", handleTimeUpdate)
+    video.addEventListener("timeupdate", handleTimeUpdate);
 
     return () => {
-      video.removeEventListener("timeupdate", handleTimeUpdate)
-    }
-  }, [vidIndex]) 
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+    };
+  }, [vidIndex]);
 
   useEffect(() => {
-    const hero = heroRef.current
-    if (!hero) return
+    const hero = heroRef.current;
+    if (!hero) return;
 
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    hero.innerHTML = strings[index].replace(/\n/g, "<br>")
+    hero.innerHTML = strings[index].replace(/\n/g, "<br>");
 
     const startTextCycle = () => {
-      let iterations = 0
-      const currentIndex = index
-      const nextIndex = (currentIndex + 1) % strings.length
-      const nextText = strings[nextIndex]
-      const nextTextLines = nextText.split("\n")
+      let iterations = 0;
+      const currentIndex = index;
+      const nextIndex = (currentIndex + 1) % strings.length;
+      const nextText = strings[nextIndex];
+      const nextTextLines = nextText.split("\n");
 
       const interval = setInterval(() => {
         const animatedLines = nextTextLines.map((line) => {
@@ -95,41 +100,43 @@ export default function Page() {
             .split("")
             .map((letter, i) => {
               if (i < iterations) {
-                return letter
+                return letter;
               }
-              return letters[Math.floor(Math.random() * letters.length)]
+              return letters[Math.floor(Math.random() * letters.length)];
             })
-            .join("")
-        })
+            .join("");
+        });
 
         if (hero) {
-          hero.innerHTML = animatedLines.join("<br>")
+          hero.innerHTML = animatedLines.join("<br>");
         }
 
-        iterations += 1
+        iterations += 1;
 
-        if (iterations > Math.max(...nextTextLines.map((line) => line.length))) {
-          clearInterval(interval)
-          setIndex(nextIndex)
+        if (
+          iterations > Math.max(...nextTextLines.map((line) => line.length))
+        ) {
+          clearInterval(interval);
+          setIndex(nextIndex);
         }
-      }, 50)
-    }
+      }, 50);
+    };
 
-    const initialTimeout = setTimeout(startTextCycle, 3000)
+    const initialTimeout = setTimeout(startTextCycle, 3000);
 
     const cycleInterval = setInterval(() => {
-      startTextCycle()
-    }, 8000) 
+      startTextCycle();
+    }, 8000);
 
     return () => {
-      clearTimeout(initialTimeout)
-      clearInterval(cycleInterval)
-    }
-  }, [index])
+      clearTimeout(initialTimeout);
+      clearInterval(cycleInterval);
+    };
+  }, [index]);
 
   return (
     <main className="w-full min-h-screen flex flex-col items-center bg-gradient-to-b from-black to-gray-900 overflow-x-hidden">
-      <Navbar/>
+      <Navbar />
       <div className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden rounded-b-[2rem] md:rounded-b-[3rem] lg:rounded-b-[4rem]">
         <video
           ref={videoRef}
@@ -155,9 +162,9 @@ export default function Page() {
           </div>
 
           <button
-            className="montserrat-bold border border-white text-white text-xl md:text-3xl rounded-xl p-2 px-6 hover:border-indigo-300 hover:text-black hover:bg-gradient-to-r from-indigo-300 to-purple-100 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-indigo-500/50"
+            className="space-mono-bold border border-white text-white text-xl md:text-3xl rounded-xl p-2 px-6 hover:border-indigo-300 hover:text-black hover:bg-gradient-to-r from-indigo-300 to-purple-100 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-indigo-500/50"
             onClick={() => {
-              router.push("/yoga-check")
+              router.push("/yoga-check");
             }}
           >
             Pose Now
@@ -180,7 +187,6 @@ export default function Page() {
           </svg>
         </div>
       </div>
-
     </main>
-  )
+  );
 }
