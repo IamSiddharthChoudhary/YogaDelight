@@ -3,6 +3,7 @@ import type React from "react";
 import { type ChangeEvent, useState } from "react";
 import { Loader2, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Navbar from "@/src/components/navbar";
 
 const YogaIcon = () => (
   <svg
@@ -126,11 +127,11 @@ Format your response in a clear, structured way with headings and bullet points.
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+      <div className="h-[10vh]">
+        <Navbar />
+      </div>
       <div className="container mx-auto px-4 py-12">
         <div className="flex flex-col items-center mb-10">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center bg-gradient-to-r from-indigo-300 to-purple-100 bg-clip-text text-transparent mb-4">
-            Yoga Delight
-          </h1>
           <h2 className="text-xl md:text-2xl text-center text-gray-300 max-w-2xl">
             Discover personalized yoga asanas tailored to your unique body and
             goals
