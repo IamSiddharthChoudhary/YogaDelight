@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function Page() {
-  const [mousemove, setMousemove] = useState<boolean>(false);
   const imageDivRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const imageUrls = [
@@ -34,7 +34,18 @@ export default function Page() {
       Math.hypot(x - last.x, y - last.y);
 
     const handleOnMove = (e: MouseEvent) => {
-      setMousemove(true);
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+
+      if (
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom
+      ) {
+        return;
+      }
+
       if (distanceFromLast(e.clientX, e.clientY) > window.innerWidth / 20) {
         const lead = images[globalIndex % images.length];
 
@@ -62,16 +73,18 @@ export default function Page() {
     };
 
     window.addEventListener("mousemove", handleOnMove);
-    return () => {
-      window.removeEventListener("mousemove", handleOnMove);
-    };
+
+    return () => window.removeEventListener("mousemove", handleOnMove);
   }, []);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-gradient-to-b from-gray-900 to-black text-white">
+    <div
+      ref={sectionRef}
+      className="relative w-screen h-screen overflow-hidden bg-gradient-to-b from-gray-900 to-black text-white"
+    >
       <div
-        className="absolute h-screen w-screen overflow-hidden opacity-40 pointer-events-none"
         ref={imageDivRef}
+        className="absolute inset-0 opacity-40 pointer-events-none"
       >
         {imageUrls.map((img, idx) => (
           <div
@@ -92,11 +105,14 @@ export default function Page() {
         ))}
       </div>
 
-      <div className="absolute h-full w-full z-10 flex flex-col justify-center items-center text-center gap-12">
-        <h1 className="font-extrabold text-5xl md:text-7xl text-gray-200 tracking-wide leading-tight drop-shadow-lg">
+      <div className="space-mono-bold absolute h-full w-full z-10 flex flex-col justify-center items-center text-center gap-12">
+        <h1 className="text-5xl md:text-7xl text-gray-200 tracking-wide leading-tight drop-shadow-lg">
           Get a Personalized <br />
-          <span className="bg-gradient-to-r from-indigo-300 to-purple-200 bg-clip-text text-transparent">
-            Yoga Recommendation
+          <span className="bg-gradient-to-r from-indigo-300 to-purple-200 bg-clip-text text-transparent p-3">
+            <span className="logo inline-block leading-none pb-3">
+              Yoga Recommendation
+            </span>{" "}
+            <span></span>
           </span>
         </h1>
 
