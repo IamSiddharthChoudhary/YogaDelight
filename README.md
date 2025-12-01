@@ -2,7 +2,7 @@
 
 Yoga Delight is an intelligent wellness platform that combines AI + computer vision to deliver personalized yoga recommendations, real-time pose correction, and a fully adaptive practice experience.
 
-## 🚀 Features
+## Features
 
 - **AI-generated personalized yoga sequences**
 - **Webcam-based pose detection**
@@ -11,7 +11,7 @@ Yoga Delight is an intelligent wellness platform that combines AI + computer vis
 - **Clean, responsive UI**
 - **Beautiful motion-based visuals**
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Next.js 14** (App Router)
 - **TypeScript**
@@ -19,7 +19,7 @@ Yoga Delight is an intelligent wellness platform that combines AI + computer vis
 - **Tailwind CSS**
 - **Custom Fonts & UI Components**
 
-## ▶️ Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -52,7 +52,7 @@ npm run dev
 http://localhost:3000
 ```
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 yoga-delight/
@@ -66,7 +66,7 @@ yoga-delight/
 └── README.md
 ```
 
-## 🎯 Key Features Breakdown
+## Key Features Breakdown
 
 ### 1. Personalized Recommendations
 
@@ -84,15 +84,15 @@ Get visual cues and corrections as you practice, helping you perfect your form a
 
 Fully optimized for desktop, tablet, and mobile devices with a beautiful, modern interface.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
-## 📄 License
+## License
 
 This project is for learning & personal use. Not licensed for commercial redistribution without permission.
 
-## 📧 Contact
+## Contact
 
 For questions or feedback, please open an issue on GitHub.
 
